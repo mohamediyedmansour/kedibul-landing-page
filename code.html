@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Kedibul — Istanbul's Stray Cat Network</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&amp;family=Playfair+Display:ital,wght@0,600;0,700;1,600&amp;display=swap" rel="stylesheet"/>
+<script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          },
+          colors: {
+            cream: {
+              50: '#FDFCF7',
+              100: '#FAF7EE',
+              200: '#F3EDE0',
+              300: '#E6DAC4',
+            },
+            charcoal: {
+              900: '#1A1817',
+              800: '#2A2624',
+              700: '#3D3835',
+              600: '#5C544F',
+              500: '#857B74',
+            },
+            kedi: {
+              red: '#DC2626',
+              green: '#16A34A',
+              yellow: '#EAB308',
+              yellowDark: '#CA8A04',
+              blue: '#0284C7',
+            }
+          },
+          boxShadow: {
+            'soft': '0 20px 40px -15px rgba(26, 24, 23, 0.07)',
+            'float': '0 25px 50px -12px rgba(220, 38, 38, 0.25)',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    /* Iznik subtle pattern */
+    .bg-iznik {
+      background-color: #F4EFE5;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(1deg); }
+    }
+    .floating-collar {
+      animation: float 5s ease-in-out infinite;
+    }
+  </style>
+</head>
+<body class="bg-cream-100 text-charcoal-900 font-sans antialiased selection:bg-kedi-red selection:text-white">
+<!-- Sticky Navbar -->
+<header class="sticky top-0 z-50 backdrop-blur-md bg-cream-50/90 border-b border-cream-300/60 transition-all duration-300">
+<div class="max-w-md mx-auto px-4 h-16 flex items-center justify-between">
+<!-- Brand Logo -->
+<a class="flex items-center gap-2 group" href="#">
+<span class="w-8 h-8 rounded-full bg-charcoal-900 flex items-center justify-center text-cream-50 font-black text-sm tracking-tighter group-hover:scale-105 transition-transform">k</span>
+<span class="font-extrabold text-xl tracking-tight text-charcoal-900 lowercase font-sans">kedibul<span class="text-kedi-red">.</span></span>
+</a>
+<!-- Controls: Language Toggle & App CTA -->
+<div class="flex items-center gap-2">
+<!-- Language Switcher -->
+<button aria-label="Toggle language" class="flex items-center text-xs font-bold tracking-wider px-2.5 py-1.5 rounded-full border border-charcoal-900/15 bg-cream-200/70 hover:bg-cream-300/60 transition" id="langToggleBtn" onclick="toggleLanguage()">
+<span class="language-option is-active text-kedi-red font-black" data-language="en" id="lang-indicator">EN</span>
+<span class="text-charcoal-500 mx-1">|</span>
+<span class="language-option text-charcoal-600" data-language="tr" id="lang-tr-indicator">TR</span>
+</button>
+<!-- Open App CTA -->
+<a class="bg-charcoal-900 hover:bg-charcoal-800 text-cream-50 text-xs font-bold px-3.5 py-2 rounded-full shadow-sm hover:shadow transition flex items-center gap-1.5 active:scale-95" href="#app_url">
+<span data-i18n="nav_open_app">Open App</span>
+<svg class="w-3.5 h-3.5 text-cream-300" fill="none" stroke="currentColor" viewbox="0 0 24 24">
+<path d="M14 5l7 7m0 0l-7 7m7-7H3" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"></path>
+</svg>
+</a>
+</div>
+</div>
+</header>
+<!-- Mobile Quick Navigation Strip -->
+<nav class="max-w-md mx-auto px-4 py-2 flex items-center justify-between text-xs font-semibold text-charcoal-600 border-b border-cream-200 overflow-x-auto hide-scrollbar gap-4">
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_products" href="#products">Products</a>
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_how" href="#how-it-works">How It Works</a>
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_colors" href="#meanings">Colors</a>
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_cats" href="#preview">Stories</a>
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_mission" href="#mission">Mission</a>
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_vets" href="#veterinarians">Vets</a>
+<a class="hover:text-charcoal-900 whitespace-nowrap" data-i18n="nav_founders" href="#founders">Founders</a>
+</nav>
+<!-- Hero Section -->
+<section class="max-w-md mx-auto px-4 pt-8 pb-12 relative overflow-hidden">
+<!-- Iznik Tile Micro Ornament -->
+<div class="absolute -top-12 -right-12 w-44 h-44 rounded-full bg-cream-200/50 -z-10 blur-2xl"></div>
+<!-- Badge -->
+<div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-100/70 border border-red-200 text-kedi-red text-[11px] font-bold tracking-wide uppercase mb-4">
+<span class="w-1.5 h-1.5 rounded-full bg-kedi-red animate-ping"></span>
+<span data-i18n="hero_badge">Istanbul Stray Cat Safety</span>
+</div>
+<!-- Main Headline -->
+<h1 class="text-3xl font-serif font-bold text-charcoal-900 leading-tight tracking-tight mb-3">
+<span data-i18n="hero_title">Every cat has a story. Scan to read it.</span>
+</h1>
+<p class="text-charcoal-600 text-sm leading-relaxed mb-6 font-normal">
+<span data-i18n="hero_subtitle">Kedibul tags help the people who find a street cat know who it is, where it belongs, and how to help.</span>
+</p>
+<!-- CTAs -->
+<div class="flex items-center gap-3 mb-8">
+<a class="flex-1 bg-kedi-red hover:bg-red-700 text-white font-bold text-center text-sm py-3 px-4 rounded-xl shadow-lg shadow-red-500/25 active:scale-95 transition" href="#products">
+<span data-i18n="hero_cta_get">Get Your Tag</span>
+</a>
+<a class="flex-1 bg-cream-50 hover:bg-cream-200/60 border border-charcoal-900/15 text-charcoal-900 font-bold text-center text-sm py-3 px-4 rounded-xl active:scale-95 transition" href="#app_url">
+<span data-i18n="hero_cta_app">Open App</span>
+</a>
+</div>
+<!-- Centerpiece Hero Image: Floating Red Collar with QR -->
+<div class="relative flex flex-col items-center justify-center p-3">
+<div class="relative w-full max-w-[320px] aspect-square rounded-3xl bg-gradient-to-b from-cream-50 via-white to-cream-200/60 border border-cream-300/80 shadow-soft p-4 flex items-center justify-center">
+<!-- Floating Red Collar Image -->
+<img alt="Kedibul Red Collar with QR tag" class="hero-collar-image w-full h-full object-contain filter drop-shadow-2xl floating-collar" src="/assets/red-collar.png"/>
+<!-- Interactive Pill on Collar Hero -->
+<div class="absolute -bottom-3 bg-white/95 backdrop-blur border border-cream-300 rounded-full px-3.5 py-1.5 shadow-md flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-kedi-red"></span>
+<span class="text-xs font-bold text-charcoal-800" data-i18n="hero_collar_pill">Scan tag with camera • Instant bio</span>
+</div>
+</div>
+</div>
+</section>
+<!-- How It Works Section -->
+<section class="max-w-md mx-auto px-4 py-10 bg-cream-50 border-y border-cream-300/70" id="how-it-works">
+<div class="text-center mb-8">
+<p class="text-xs font-extrabold uppercase tracking-widest text-kedi-red mb-1" data-i18n="how_eyebrow">Crowdsourced &amp; Simple</p>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900" data-i18n="how_title">How Kedibul Works</h2>
+<p class="text-xs text-charcoal-500 mt-1 italic font-serif" data-i18n="how_tagline">"Built by Istanbul, for Istanbul."</p>
+</div>
+<div class="space-y-4">
+<!-- Step 1 -->
+<div class="bg-white p-4 rounded-2xl border border-cream-200 flex items-start gap-4 shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-red-50 text-kedi-red font-black flex items-center justify-center flex-shrink-0 text-base border border-red-100">
+          1
+        </div>
+<div>
+<h3 class="font-bold text-sm text-charcoal-900 mb-0.5" data-i18n="step1_title">Scan with any phone</h3>
+<p class="text-xs text-charcoal-600 leading-relaxed" data-i18n="step1_desc">Point any standard camera at the QR tag. No download required to immediately view essential information.</p>
+</div>
+</div>
+<!-- Step 2 -->
+<div class="bg-white p-4 rounded-2xl border border-cream-200 flex items-start gap-4 shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-amber-50 text-kedi-yellowDark font-black flex items-center justify-center flex-shrink-0 text-base border border-amber-100">
+          2
+        </div>
+<div>
+<h3 class="font-bold text-sm text-charcoal-900 mb-0.5" data-i18n="step2_title">Read cat's profile</h3>
+<p class="text-xs text-charcoal-600 leading-relaxed" data-i18n="step2_desc">Discover their real neighborhood name, temperaments, food habits, and humorous anecdotes from local shopkeepers.</p>
+</div>
+</div>
+<!-- Step 3 -->
+<div class="bg-white p-4 rounded-2xl border border-cream-200 flex items-start gap-4 shadow-sm">
+<div class="w-10 h-10 rounded-xl bg-emerald-50 text-kedi-green font-black flex items-center justify-center flex-shrink-0 text-base border border-emerald-100">
+          3
+        </div>
+<div>
+<h3 class="font-bold text-sm text-charcoal-900 mb-0.5" data-i18n="step3_title">Help the neighborhood</h3>
+<p class="text-xs text-charcoal-600 leading-relaxed" data-i18n="step3_desc">Log health check observations, report safe sightings, and coordinate with nearby caretakers and partnered clinics.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Interactive Color Meanings -->
+<section class="max-w-md mx-auto px-4 py-12" id="meanings">
+<div class="mb-6">
+<span class="text-xs font-bold uppercase tracking-widest text-charcoal-500" data-i18n="color_tag">Street Etiquette Code</span>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900 mt-1" data-i18n="color_title">Color Meanings</h2>
+<p class="text-xs text-charcoal-600 mt-1" data-i18n="color_desc">Every collar color communicates the cat's temperament directly to neighbors and tourists alike.</p>
+</div>
+<!-- Interactive Cards / Tabs -->
+<div class="space-y-3">
+<!-- Green Card -->
+<div class="cursor-pointer transition-all duration-200 border-2 border-kedi-green/80 bg-white rounded-2xl p-4 shadow-sm hover:shadow" id="card-green" onclick="selectColor('green')">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-full bg-kedi-green"></span>
+<span class="font-bold text-sm text-charcoal-900" data-i18n="color_green_title">Green Collar</span>
+</div>
+<span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-emerald-50 text-kedi-green" data-i18n="color_green_badge">Friendly</span>
+</div>
+<p class="text-xs text-charcoal-700 font-medium" data-i18n="color_green_meaning">"Friendly. Come say hello." Loves scritches, food shares, and warm laps.</p>
+<div class="mt-3 pt-3 border-t border-cream-200 flex items-center gap-3">
+<img alt="Green collar" class="w-14 h-14 object-contain rounded-lg bg-cream-100 p-1 border border-cream-200" src="/assets/green-collar.png"/>
+<p class="text-[11px] text-charcoal-500" data-i18n="color_green_hint">Commonly worn by sociable cats hanging around cafes, bookshops, and ferry docks.</p>
+</div>
+</div>
+<!-- Yellow Card -->
+<div class="cursor-pointer transition-all duration-200 border-2 border-kedi-yellowDark/40 bg-white/80 rounded-2xl p-4 shadow-sm hover:shadow" id="card-yellow" onclick="selectColor('yellow')">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-full bg-kedi-yellow"></span>
+<span class="font-bold text-sm text-charcoal-900" data-i18n="color_yellow_title">Yellow Collar</span>
+</div>
+<span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-amber-50 text-kedi-yellowDark" data-i18n="color_yellow_badge">Medium</span>
+</div>
+<p class="text-xs text-charcoal-700 font-medium" data-i18n="color_yellow_meaning">"Medium. Approach with care." Enjoys your presence, but prefers you let them sniff first.</p>
+<div class="mt-3 pt-3 border-t border-cream-200 flex items-center gap-3">
+<img alt="Yellow collar" class="w-14 h-14 object-contain rounded-lg bg-cream-100 p-1 border border-cream-200" src="/assets/yellow-collar.png"/>
+<p class="text-[11px] text-charcoal-500" data-i18n="color_yellow_hint">Great for cautious neighborhood observers who need slow hand greetings.</p>
+</div>
+</div>
+<!-- Red Card -->
+<div class="cursor-pointer transition-all duration-200 border-2 border-kedi-red/40 bg-white/80 rounded-2xl p-4 shadow-sm hover:shadow" id="card-red" onclick="selectColor('red')">
+<div class="flex items-center justify-between mb-2">
+<div class="flex items-center gap-2">
+<span class="w-3.5 h-3.5 rounded-full bg-kedi-red"></span>
+<span class="font-bold text-sm text-charcoal-900" data-i18n="color_red_title">Red Collar</span>
+</div>
+<span class="text-[11px] font-bold px-2 py-0.5 rounded-md bg-red-50 text-kedi-red" data-i18n="color_red_badge">Do Not Touch</span>
+</div>
+<p class="text-xs text-charcoal-700 font-medium" data-i18n="color_red_meaning">"Do not approach." Independent street boss or under medical monitoring. Admire from afar!</p>
+<div class="mt-3 pt-3 border-t border-cream-200 flex items-center gap-3">
+<img alt="Red collar" class="w-14 h-14 object-contain rounded-lg bg-cream-100 p-1 border border-cream-200" src="/assets/red-collar.png"/>
+<p class="text-[11px] text-charcoal-500" data-i18n="color_red_hint">Protects nervous cats from unwanted touching while keeping their identity reachable via QR.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Scan Preview: Phone Mockup with 3 Rotating Profiles -->
+<section class="max-w-md mx-auto px-4 py-10 bg-cream-200/50 rounded-3xl border border-cream-300" id="preview">
+<div class="text-center mb-6">
+<span class="text-xs font-bold uppercase tracking-widest text-kedi-red" data-i18n="preview_badge">Simulate a Scan</span>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900 mt-1" data-i18n="preview_title">What You'll See</h2>
+<p class="text-xs text-charcoal-600 mt-1" data-i18n="preview_desc">Real crowdsourced bio cards from Istanbul's favorite feline personalities.</p>
+</div>
+<!-- Phone Frame Mockup -->
+<div class="relative bg-charcoal-900 rounded-[2.5rem] p-3 shadow-2xl border-4 border-charcoal-800 max-w-[310px] mx-auto">
+<!-- Phone Notch / Speaker -->
+<div class="w-24 h-4 bg-charcoal-800 rounded-full mx-auto mb-3 flex items-center justify-center">
+<div class="w-2 h-2 rounded-full bg-charcoal-900 mr-2"></div>
+<div class="w-6 h-1 rounded-full bg-charcoal-700"></div>
+</div>
+<!-- Phone Screen Container -->
+<div class="bg-cream-50 rounded-[2rem] p-4 text-charcoal-900 overflow-hidden relative min-h-[380px] flex flex-col justify-between">
+<!-- Top App Bar in Mockup -->
+<div class="flex items-center justify-between border-b border-cream-300/70 pb-2">
+<div class="flex items-center gap-1.5">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+<span class="text-[10px] font-extrabold uppercase tracking-wider text-charcoal-500">KEDIBUL LIVE TAG</span>
+</div>
+<span class="text-[10px] font-bold text-charcoal-600">Istanbul 📍</span>
+</div>
+<!-- Dynamic Profile Content (Toby, Mirzam, Pamuk) -->
+<div class="my-auto py-2 transition-opacity duration-300" id="cat-profile-display">
+<!-- Injected via JS -->
+</div>
+<!-- Mockup Bottom Actions -->
+<div class="pt-3 border-t border-cream-200/90 flex gap-2">
+<button class="flex-1 bg-charcoal-900 text-white text-[11px] font-bold py-2 rounded-xl text-center shadow">
+<span data-i18n="mockup_report_btn">Report Sighting</span>
+</button>
+<button class="bg-cream-200 text-charcoal-800 px-3 py-2 rounded-xl text-[11px] font-bold">
+            ❤️ 428
+          </button>
+</div>
+</div>
+<!-- Mockup Carousel Dots & Controls -->
+<div class="flex items-center justify-between px-3 mt-3">
+<button class="text-xs text-cream-300 hover:text-white px-2 py-1 font-bold" onclick="prevCatProfile()">‹ Prev</button>
+<div class="flex gap-1.5" id="profile-dots">
+<span class="w-2 h-2 rounded-full bg-kedi-red"></span>
+<span class="w-2 h-2 rounded-full bg-charcoal-700"></span>
+<span class="w-2 h-2 rounded-full bg-charcoal-700"></span>
+</div>
+<button class="text-xs text-cream-300 hover:text-white px-2 py-1 font-bold" onclick="nextCatProfile()">Next ›</button>
+</div>
+</div>
+</section>
+<!-- Products Section: Horizontally Scrollable Carousel -->
+<section class="max-w-md mx-auto px-4 py-12" id="products">
+<div class="flex items-end justify-between mb-4">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-kedi-red" data-i18n="products_badge">Official Gear</span>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900" data-i18n="products_title">Kedibul Collars</h2>
+</div>
+<!-- Counter (e.g. 1 / 4) -->
+<div class="text-xs font-extrabold bg-cream-200 px-2.5 py-1 rounded-full text-charcoal-700">
+<span id="product-counter">1</span> / 4
+      </div>
+</div>
+<p class="text-xs text-charcoal-600 mb-5" data-i18n="products_subtitle">Durable, breakaway nylon with laser-etched QR codes or Apple AirTag companion holders.</p>
+<!-- Carousel Container -->
+<div class="flex overflow-x-auto gap-4 snap-x snap-mandatory hide-scrollbar pb-4 pt-1" id="productCarousel" onscroll="updateProductCounter()">
+<!-- Product 1: Green QR -->
+<div class="w-[85%] flex-shrink-0 snap-center bg-white rounded-3xl p-5 border border-cream-300 shadow-soft flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-emerald-100 text-kedi-green uppercase" data-i18n="prod1_badge">Friendly</span>
+<span class="text-sm font-black text-charcoal-900">₺180 <span class="text-[10px] font-normal text-charcoal-500">[PRICE]</span></span>
+</div>
+<div class="w-full aspect-square rounded-2xl bg-cream-50 p-2 mb-4 flex items-center justify-center border border-cream-200">
+<img alt="Kedibul Green Collar" class="w-full h-full object-contain" src="/assets/green-collar.png"/>
+</div>
+<h3 class="font-bold text-base text-charcoal-900" data-i18n="prod1_name">Kedibul Green Collar (QR)</h3>
+<p class="text-xs text-charcoal-600 mt-1 italic" data-i18n="prod1_desc">"Friendly. Come say hello."</p>
+<p class="text-xs text-charcoal-500 mt-2" data-i18n="prod_spec">High-density woven nylon, stainless steel buckle, break-away safety release, waterproof QR tag.</p>
+</div>
+<a class="mt-5 w-full block text-center bg-charcoal-900 hover:bg-charcoal-800 text-cream-50 font-bold text-xs py-3 rounded-xl transition active:scale-95" data-i18n="buy_now" href="#product_url">
+          Buy Now →
+        </a>
+</div>
+<!-- Product 2: Yellow QR -->
+<div class="w-[85%] flex-shrink-0 snap-center bg-white rounded-3xl p-5 border border-cream-300 shadow-soft flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-amber-100 text-kedi-yellowDark uppercase" data-i18n="prod2_badge">Caution</span>
+<span class="text-sm font-black text-charcoal-900">₺180 <span class="text-[10px] font-normal text-charcoal-500">[PRICE]</span></span>
+</div>
+<div class="w-full aspect-square rounded-2xl bg-cream-50 p-2 mb-4 flex items-center justify-center border border-cream-200">
+<img alt="Kedibul Yellow Collar" class="w-full h-full object-contain" src="/assets/yellow-collar.png"/>
+</div>
+<h3 class="font-bold text-base text-charcoal-900" data-i18n="prod2_name">Kedibul Yellow Collar (QR)</h3>
+<p class="text-xs text-charcoal-600 mt-1 italic" data-i18n="prod2_desc">"Medium. Approach with care."</p>
+<p class="text-xs text-charcoal-500 mt-2" data-i18n="prod_spec">High-density woven nylon, stainless steel buckle, break-away safety release, waterproof QR tag.</p>
+</div>
+<a class="mt-5 w-full block text-center bg-charcoal-900 hover:bg-charcoal-800 text-cream-50 font-bold text-xs py-3 rounded-xl transition active:scale-95" data-i18n="buy_now" href="#product_url">
+          Buy Now →
+        </a>
+</div>
+<!-- Product 3: Red QR -->
+<div class="w-[85%] flex-shrink-0 snap-center bg-white rounded-3xl p-5 border border-cream-300 shadow-soft flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-red-100 text-kedi-red uppercase" data-i18n="prod3_badge">Do Not Touch</span>
+<span class="text-sm font-black text-charcoal-900">₺180 <span class="text-[10px] font-normal text-charcoal-500">[PRICE]</span></span>
+</div>
+<div class="w-full aspect-square rounded-2xl bg-cream-50 p-2 mb-4 flex items-center justify-center border border-cream-200">
+<img alt="Kedibul Red Collar" class="w-full h-full object-contain" src="/assets/red-collar.png"/>
+</div>
+<h3 class="font-bold text-base text-charcoal-900" data-i18n="prod3_name">Kedibul Red Collar (QR)</h3>
+<p class="text-xs text-charcoal-600 mt-1 italic" data-i18n="prod3_desc">"Do not approach."</p>
+<p class="text-xs text-charcoal-500 mt-2" data-i18n="prod_spec">High-density woven nylon, stainless steel buckle, break-away safety release, waterproof QR tag.</p>
+</div>
+<a class="mt-5 w-full block text-center bg-kedi-red hover:bg-red-700 text-white font-bold text-xs py-3 rounded-xl transition active:scale-95" data-i18n="buy_now" href="#product_url">
+          Buy Now →
+        </a>
+</div>
+<!-- Product 4: AirTag Collar Option -->
+<div class="w-[85%] flex-shrink-0 snap-center bg-white rounded-3xl p-5 border-2 border-kedi-yellowDark/60 shadow-soft flex flex-col justify-between relative overflow-hidden">
+<div class="absolute -right-10 top-5 bg-kedi-yellow text-charcoal-900 text-[9px] font-black tracking-wider uppercase py-1 px-10 rotate-45">
+          BESTSELLER
+        </div>
+<div>
+<div class="flex justify-between items-start mb-2">
+<span class="text-[10px] font-extrabold px-2.5 py-0.5 rounded-full bg-yellow-100 text-kedi-yellowDark uppercase" data-i18n="prod4_badge">Track &amp; Scan</span>
+<span class="text-sm font-black text-charcoal-900">₺240 <span class="text-[10px] font-normal text-charcoal-500">[PRICE]</span></span>
+</div>
+<div class="w-full aspect-square rounded-2xl bg-cream-50 p-2 mb-4 flex items-center justify-center border border-cream-200">
+<img alt="Kedibul Collar with AirTag" class="w-full h-full object-contain" src="/assets/airtag-collar.png"/>
+</div>
+<h3 class="font-bold text-base text-charcoal-900" data-i18n="prod4_name">Kedibul Collar with AirTag</h3>
+<p class="text-xs text-charcoal-600 mt-1" data-i18n="prod4_desc">"Want to track your cat as well? Pair it with an AirTag holder."</p>
+<p class="text-xs text-charcoal-500 mt-2" data-i18n="prod4_spec">Precision silicone housing for Apple AirTag + QR backup. Anti-loss double security.</p>
+</div>
+<a class="mt-5 w-full block text-center bg-charcoal-900 hover:bg-charcoal-800 text-cream-50 font-bold text-xs py-3 rounded-xl transition active:scale-95" data-i18n="buy_now" href="#product_url">
+          Buy Now →
+        </a>
+</div>
+</div>
+<!-- Carousel Nav Buttons for mobile -->
+<div class="flex justify-center gap-3 mt-1">
+<button class="w-8 h-8 rounded-full bg-cream-200 border border-cream-300 flex items-center justify-center text-charcoal-800 text-sm font-bold shadow-sm active:scale-90 transition" onclick="scrollProductCarousel(-1)">
+        ←
+      </button>
+<button class="w-8 h-8 rounded-full bg-cream-200 border border-cream-300 flex items-center justify-center text-charcoal-800 text-sm font-bold shadow-sm active:scale-90 transition" onclick="scrollProductCarousel(1)">
+        →
+      </button>
+</div>
+</section>
+<!-- Mission Section -->
+<section class="max-w-md mx-auto px-4 py-12 bg-cream-50 border-y border-cream-300/70" id="mission">
+<div class="inline-flex items-center gap-2 mb-2">
+<span class="w-2 h-2 rounded-full bg-kedi-red"></span>
+<span class="text-xs font-bold uppercase tracking-widest text-charcoal-600" data-i18n="mission_eyebrow">Our Istanbul Heart</span>
+</div>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900 mb-4" data-i18n="mission_title">Why Kedibul</h2>
+<p class="text-sm font-serif italic text-charcoal-800 leading-relaxed mb-6 bg-cream-200/50 p-4 rounded-2xl border-l-4 border-kedi-red" data-i18n="mission_quote">
+      "Istanbul's cats belong to its streets. Kedibul helps every one of them find their way home and helps every neighbor know who they're meeting."
+    </p>
+<!-- Statistics Grid -->
+<div class="grid grid-cols-2 gap-3 mb-6">
+<div class="bg-white p-4 rounded-2xl border border-cream-300 shadow-sm text-center">
+<span class="block text-2xl font-black text-charcoal-900">125,000+</span>
+<span class="text-[11px] font-bold text-charcoal-600" data-i18n="stat_cats_label">Estimated Stray Cats</span>
+<a class="text-[9px] text-kedi-red block mt-1 underline hover:text-red-700" data-i18n="stat_source" href="#source_link">[SOURCE_LINK: City Census]</a>
+</div>
+<div class="bg-white p-4 rounded-2xl border border-cream-300 shadow-sm text-center">
+<span class="block text-2xl font-black text-kedi-red">14,250+</span>
+<span class="text-[11px] font-bold text-charcoal-600" data-i18n="stat_scanned_label">14,250+ Tags Scanned</span>
+<span class="text-[9px] text-charcoal-400 block mt-1">Across 39 Districts</span>
+</div>
+<div class="bg-white p-4 rounded-2xl border border-cream-300 shadow-sm text-center col-span-2">
+<span class="block text-2xl font-black text-charcoal-900">3,890</span>
+<span class="text-[11px] font-bold text-charcoal-600" data-i18n="stat_registered_label">3,890 Street Cats Registered with Active Guardians</span>
+</div>
+</div>
+</section>
+<!-- Veterinarian Partnerships Section -->
+<section class="max-w-md mx-auto px-4 py-12" id="veterinarians">
+<div class="text-center mb-6">
+<span class="text-xs font-bold uppercase tracking-widest text-emerald-700" data-i18n="vet_badge">Care Network</span>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900 mt-1" data-i18n="vet_title">Trusted by 100+ veterinarians across Istanbul</h2>
+<p class="text-xs text-charcoal-600 mt-1" data-i18n="vet_subtitle">Partnering with neighborhood clinics to provide fast medical lookup upon tag scanning.</p>
+</div>
+<!-- Vet Testimonial Card -->
+<div class="bg-white p-5 rounded-3xl border border-cream-300 shadow-soft mb-6">
+<div class="flex items-center gap-3 mb-3">
+<!-- Vet Avatar Placeholder -->
+<div class="w-12 h-12 rounded-full bg-cream-200 border border-cream-300 flex items-center justify-center text-charcoal-600 font-bold text-sm flex-shrink-0">
+          🩺
+        </div>
+<div>
+<h4 class="font-bold text-sm text-charcoal-900">Dr. Selin Yılmaz, DVM</h4>
+<p class="text-xs text-charcoal-500" data-i18n="vet_clinic">Moda Pet Clinic, Kadıköy [VET_PHOTO]</p>
+</div>
+</div>
+<p class="text-xs text-charcoal-700 italic leading-relaxed" data-i18n="vet_quote">
+        "[QUOTE] When an injured cat is brought in with a Kedibul collar, we immediately know its vaccinated status and reach the neighborhood feeder who knows its history. It saves critical triage time."
+      </p>
+</div>
+<!-- Partner Clinic Logo Wall Placeholders -->
+<div class="bg-cream-50 p-4 rounded-2xl border border-cream-300">
+<p class="text-[11px] font-extrabold text-charcoal-500 uppercase tracking-wider text-center mb-3" data-i18n="clinic_wall_title">Partner Veterinary Clinics</p>
+<div class="grid grid-cols-3 gap-2 text-center">
+<div class="bg-white py-2 px-1 rounded-lg border border-cream-200 text-[10px] font-bold text-charcoal-700 truncate">Kadıköy Vet</div>
+<div class="bg-white py-2 px-1 rounded-lg border border-cream-200 text-[10px] font-bold text-charcoal-700 truncate">Cihangir Pati</div>
+<div class="bg-white py-2 px-1 rounded-lg border border-cream-200 text-[10px] font-bold text-charcoal-700 truncate">Beşiktaş Hayvan</div>
+<div class="bg-white py-2 px-1 rounded-lg border border-cream-200 text-[10px] font-bold text-charcoal-700 truncate">Üsküdar Klinigi</div>
+<div class="bg-white py-2 px-1 rounded-lg border border-cream-200 text-[10px] font-bold text-charcoal-700 truncate">Nişantaşı Pet</div>
+<div class="bg-white py-2 px-1 rounded-lg border border-cream-200 text-[10px] font-bold text-charcoal-700 truncate">+95 More</div>
+</div>
+</div>
+</section>
+<!-- Cat in Collar Cinematic Photo Section -->
+<section class="cinematic-section max-w-md mx-auto px-4 py-6">
+<div class="relative rounded-3xl overflow-hidden shadow-soft border border-cream-300/80 aspect-[4/5] sm:aspect-square bg-charcoal-900 group">
+<!-- High-Resolution Cat Wearing Collar with QR Tag -->
+<img alt="Istanbul street cat wearing Kedibul red collar with QR tag" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" src="/assets/street-cat.png"/>
+<!-- Elegant Gradient Overlay for Cinematic Legibility -->
+<div class="absolute inset-0 bg-gradient-to-t from-charcoal-900/95 via-charcoal-900/30 to-black/20"></div>
+<!-- Top Location Badge -->
+<div class="absolute top-4 left-4 z-20 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-charcoal-900/70 backdrop-blur-md border border-white/20 text-cream-100 text-[11px] font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-kedi-red animate-pulse"></span>
+<span data-i18n="cat_photo_loc">Karaköy Waterfront • Active Tag</span>
+</div>
+<!-- Caption Overlay -->
+<div class="absolute bottom-0 inset-x-0 z-20 p-5 text-white">
+<span class="text-[10px] font-extrabold uppercase tracking-widest text-kedi-yellow inline-block mb-1" data-i18n="cat_photo_tag">Street Guardian</span>
+<p class="text-xl sm:text-2xl font-serif font-bold text-cream-50 leading-snug drop-shadow-sm mb-1.5" data-i18n="cat_photo_caption">"Wear it, scan it, come home."</p>
+<p class="text-xs text-cream-200/80 font-normal leading-relaxed" data-i18n="cat_photo_sub">Breakaway safety clasps crafted for peaceful urban stray coexistence.</p>
+</div>
+</div>
+</section>
+<!-- Dedicated Founders Section -->
+<section class="max-w-md mx-auto px-4 py-12" id="founders">
+<div class="text-center mb-8">
+<span class="text-xs font-bold uppercase tracking-widest text-kedi-red inline-block mb-1" data-i18n="founders_badge">The Team Behind the Mission</span>
+<h2 class="text-2xl font-serif font-bold text-charcoal-900" data-i18n="founders_title">Meet the Founders</h2>
+<p class="text-xs text-charcoal-600 mt-1 max-w-xs mx-auto leading-relaxed" data-i18n="founders_subtitle">Born out of love for Istanbul's four-legged citizens.</p>
+</div>
+<!-- Founders Grid / Cards -->
+<div class="space-y-4">
+<!-- Founder 1: Deniz Eren -->
+<div class="bg-white p-5 rounded-3xl border border-cream-300 shadow-soft hover:shadow transition-shadow">
+<div class="flex items-center gap-3.5 mb-3">
+<div class="w-13 h-13 w-12 h-12 rounded-2xl bg-cream-200 border border-cream-300 flex items-center justify-center text-charcoal-800 font-serif font-bold text-lg flex-shrink-0 shadow-sm">
+            DE
+          </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-bold text-base text-charcoal-900 truncate">Deniz Eren</h3>
+<span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-cream-200 text-charcoal-700 uppercase tracking-wider" data-i18n="f1_tag">Kadıköy</span>
+</div>
+<p class="text-xs font-semibold text-kedi-red mt-0.5" data-i18n="f1_role">Co-founder &amp; Product Lead</p>
+</div>
+</div>
+<p class="text-xs text-charcoal-600 leading-relaxed font-normal" data-i18n="f1_bio">
+          Feline enthusiast and tech builder from Kadıköy, dedicated to giving every street cat an identity.
+        </p>
+</div>
+<!-- Founder 2: Dr. Zeynep Kaya -->
+<div class="bg-white p-5 rounded-3xl border border-cream-300 shadow-soft hover:shadow transition-shadow">
+<div class="flex items-center gap-3.5 mb-3">
+<div class="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 flex items-center justify-center font-serif font-bold text-lg flex-shrink-0 shadow-sm">
+            ZK
+          </div>
+<div class="flex-1 min-w-0">
+<div class="flex items-center justify-between gap-1">
+<h3 class="font-bold text-base text-charcoal-900 truncate">Dr. Zeynep Kaya</h3>
+<span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full bg-emerald-100/80 text-kedi-green uppercase tracking-wider" data-i18n="f2_tag">DVM</span>
+</div>
+<p class="text-xs font-semibold text-emerald-700 mt-0.5" data-i18n="f2_role">Co-founder &amp; Chief Veterinary Officer</p>
+</div>
+</div>
+<p class="text-xs text-charcoal-600 leading-relaxed font-normal" data-i18n="f2_bio">
+          Neighborhood clinic vet ensuring every collar is 100% feline-safe, stress-free, and lightweight.
+        </p>
+</div>
+</div>
+</section>
+<!-- Waitlist / Email Signup -->
+<section class="max-w-md mx-auto px-4 py-10 bg-cream-50 border-t border-cream-300">
+<div class="bg-white p-6 rounded-3xl border border-cream-300 shadow-sm text-center">
+<div class="w-10 h-10 rounded-full bg-red-100 text-kedi-red flex items-center justify-center mx-auto mb-3 text-lg font-bold">
+        ✉️
+      </div>
+<h3 class="font-serif text-xl font-bold text-charcoal-900 mb-1" data-i18n="signup_title">Get updates from Kedibul</h3>
+<p class="text-xs text-charcoal-600 mb-4" data-i18n="signup_promise">"We'll only send you what matters for Istanbul's cats."</p>
+<form class="space-y-2" onsubmit="handleSubscribe(event)">
+<input class="w-full text-xs px-4 py-3 rounded-xl border border-cream-300 bg-cream-50 focus:outline-none focus:ring-2 focus:ring-kedi-red text-charcoal-900" placeholder="your.email@istanbul.com" required="" type="email"/>
+<button class="w-full bg-charcoal-900 hover:bg-charcoal-800 text-cream-50 font-bold text-xs py-3 rounded-xl transition shadow active:scale-95" data-i18n="signup_btn" type="submit">
+          Subscribe to Updates
+        </button>
+</form>
+<div class="hidden mt-3 text-xs text-kedi-green font-bold" data-i18n="signup_success" id="sub-success">
+        Teşekkürler! You are on the guardian list.
+      </div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-charcoal-900 text-cream-200 border-t border-charcoal-800 pt-12 pb-8">
+<div class="max-w-md mx-auto px-4 space-y-8">
+<!-- Brand & Mission Column -->
+<div>
+<div class="flex items-center gap-2 mb-2">
+<span class="w-6 h-6 rounded-full bg-cream-50 text-charcoal-900 flex items-center justify-center font-black text-xs">k</span>
+<span class="font-extrabold text-lg tracking-tight text-cream-50 lowercase font-sans">kedibul<span class="text-kedi-red">.</span></span>
+</div>
+<p class="text-xs text-charcoal-500 leading-relaxed" data-i18n="footer_mission">
+          Crowdsourced cat welfare network honoring Istanbul's centuries-old street feline heritage through modern contactless identification.
+        </p>
+</div>
+<!-- Quick Nav Links -->
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-cream-50 mb-3" data-i18n="footer_links_title">Explore</h4>
+<div class="grid grid-cols-2 gap-2 text-xs text-charcoal-500">
+<a class="hover:text-cream-100" data-i18n="nav_products" href="#products">Products</a>
+<a class="hover:text-cream-100" data-i18n="nav_mission" href="#mission">Mission</a>
+<a class="hover:text-cream-100" data-i18n="nav_vets" href="#veterinarians">Veterinarians</a>
+<a class="hover:text-cream-100" data-i18n="nav_founders" href="#founders">Founders</a>
+<a class="hover:text-cream-100 font-bold text-kedi-yellow col-span-2" data-i18n="nav_open_app" href="#app_url">Open App [APP_URL]</a>
+</div>
+</div>
+<!-- Contact Info -->
+<div>
+<h4 class="text-xs font-bold uppercase tracking-wider text-cream-50 mb-3" data-i18n="footer_contact_title">Contact</h4>
+<div class="space-y-1.5 text-xs text-charcoal-500">
+<p>📧 <span class="text-cream-200">[COMPANY_EMAIL: merhaba@kedibul.org]</span></p>
+<p>📞 <span class="text-cream-200">[PHONE_NUMBER: +90 216 555 KEDI]</span></p>
+<p>📍 <span class="text-cream-200">[OFFICE_ADDRESS: Caferağa Mah. Moda Cad. No:44, Kadıköy, Istanbul]</span></p>
+<div class="pt-2 flex gap-3 text-sm text-cream-300">
+<a class="hover:text-white" href="#social_links" title="Instagram">📸 [SOCIAL: Instagram]</a>
+<a class="hover:text-white" href="#social_links" title="X">🐦 [SOCIAL: X]</a>
+</div>
+</div>
+</div>
+<!-- Legal Info -->
+<div class="pt-4 border-t border-charcoal-800">
+<h4 class="text-xs font-bold uppercase tracking-wider text-cream-50 mb-2" data-i18n="footer_legal_title">Legal &amp; KVKK</h4>
+<div class="flex flex-wrap gap-x-3 gap-y-1 text-[11px] text-charcoal-500">
+<a class="hover:underline" href="#privacy_policy">[PRIVACY_POLICY_LINK: KVKK Aydınlatma Metni]</a>
+<a class="hover:underline" href="#terms_of_use">[TERMS_OF_USE_LINK]</a>
+<a class="hover:underline" href="#cookie_policy">[COOKIE_POLICY_LINK]</a>
+<span>Reg: [COMPANY_REGISTRATION_NUMBER: 4921-TR]</span>
+<span>Tax: [TAX_ID: 8820194821]</span>
+</div>
+<p class="text-[10px] text-charcoal-600 mt-3" data-i18n="legal_notice">
+          [LEGAL_NOTICE_TEXT: Kedibul is a civic animal welfare initiative in compliance with Turkish Animal Protection Law No. 5199.]
+        </p>
+</div>
+<!-- Bottom Bar -->
+<div class="pt-4 border-t border-charcoal-800 text-center text-[11px] text-charcoal-600">
+<p>© 2026 Kedibul. All rights reserved.</p>
+</div>
+</div>
+</footer>
+<!-- Interactive JavaScript: Translations, Profile Carousel, Interactions -->
+<script>
+    // BILINGUAL DICTIONARY
+    const translations = {
+      en: {
+        nav_open_app: "Open App",
+        nav_products: "Products",
+        nav_how: "How It Works",
+        nav_colors: "Colors",
+        nav_cats: "Stories",
+        nav_mission: "Mission",
+        nav_vets: "Veterinarians",
+        nav_founders: "Founders",
+        hero_badge: "Istanbul Stray Cat Safety",
+        hero_title: "Every cat has a story. Scan to read it.",
+        hero_subtitle: "Kedibul tags help the people who find a street cat know who it is, where it belongs, and how to help.",
+        hero_cta_get: "Get Your Tag",
+        hero_cta_app: "Open App",
+        hero_collar_pill: "Scan tag with camera • Instant bio",
+        how_eyebrow: "Crowdsourced & Simple",
+        how_title: "How Kedibul Works",
+        how_tagline: "\"Built by Istanbul, for Istanbul.\"",
+        step1_title: "Scan with any phone",
+        step1_desc: "Point any standard camera at the QR tag. No download required to immediately view essential information.",
+        step2_title: "Read cat's profile",
+        step2_desc: "Discover their real neighborhood name, temperaments, food habits, and humorous anecdotes from local shopkeepers.",
+        step3_title: "Help the neighborhood",
+        step3_desc: "Log health check observations, report safe sightings, and coordinate with nearby caretakers and partnered clinics.",
+        color_tag: "Street Etiquette Code",
+        color_title: "Color Meanings",
+        color_desc: "Every collar color communicates the cat's temperament directly to neighbors and tourists alike.",
+        color_green_title: "Green Collar",
+        color_green_badge: "Friendly",
+        color_green_meaning: "\"Friendly. Come say hello.\" Loves scritches, food shares, and warm laps.",
+        color_green_hint: "Commonly worn by sociable cats hanging around cafes, bookshops, and ferry docks.",
+        color_yellow_title: "Yellow Collar",
+        color_yellow_badge: "Medium",
+        color_yellow_meaning: "\"Medium. Approach with care.\" Enjoys your presence, but prefers you let them sniff first.",
+        color_yellow_hint: "Great for cautious neighborhood observers who need slow hand greetings.",
+        color_red_title: "Red Collar",
+        color_red_badge: "Do Not Touch",
+        color_red_meaning: "\"Do not approach.\" Independent street boss or under medical monitoring. Admire from afar!",
+        color_red_hint: "Protects nervous cats from unwanted touching while keeping their identity reachable via QR.",
+        preview_badge: "Simulate a Scan",
+        preview_title: "What You'll See",
+        preview_desc: "Real crowdsourced bio cards from Istanbul's favorite feline personalities.",
+        mockup_report_btn: "Report Sighting",
+        products_badge: "Official Gear",
+        products_title: "Kedibul Collars",
+        products_subtitle: "Durable, breakaway nylon with laser-etched QR codes or Apple AirTag companion holders.",
+        prod1_badge: "Friendly",
+        prod1_name: "Kedibul Green Collar (QR)",
+        prod1_desc: "\"Friendly. Come say hello.\"",
+        prod2_badge: "Caution",
+        prod2_name: "Kedibul Yellow Collar (QR)",
+        prod2_desc: "\"Medium. Approach with care.\"",
+        prod3_badge: "Do Not Touch",
+        prod3_name: "Kedibul Red Collar (QR)",
+        prod3_desc: "\"Do not approach.\"",
+        prod4_badge: "Track & Scan",
+        prod4_name: "Kedibul Collar with AirTag",
+        prod4_desc: "\"Want to track your cat as well? Pair it with an AirTag holder.\"",
+        prod_spec: "High-density woven nylon, stainless steel buckle, break-away safety release, waterproof QR tag.",
+        prod4_spec: "Precision silicone housing for Apple AirTag + QR backup. Anti-loss double security.",
+        buy_now: "Buy Now →",
+        mission_eyebrow: "Our Istanbul Heart",
+        mission_title: "Why Kedibul",
+        mission_quote: "\"Istanbul's cats belong to its streets. Kedibul helps every one of them find their way home and helps every neighbor know who they're meeting.\"",
+        stat_cats_label: "Estimated Stray Cats",
+        stat_scanned_label: "14,250+ Tags Scanned",
+        stat_registered_label: "3,890 Street Cats Registered with Active Guardians",
+        stat_source: "[SOURCE_LINK: City Census]",
+        vet_badge: "Care Network",
+        vet_title: "Trusted by 100+ veterinarians across Istanbul",
+        vet_subtitle: "Partnering with neighborhood clinics to provide fast medical lookup upon tag scanning.",
+        vet_clinic: "Moda Pet Clinic, Kadıköy [VET_PHOTO]",
+        vet_quote: "\"[QUOTE] When an injured cat is brought in with a Kedibul collar, we immediately know its vaccinated status and reach the neighborhood feeder who knows its history. It saves critical triage time.\"",
+        clinic_wall_title: "Partner Veterinary Clinics",
+        cat_photo_loc: "Karaköy Waterfront • Active Tag",
+        cat_photo_tag: "Street Guardian",
+        cat_photo_caption: "\"Wear it, scan it, come home.\"",
+        cat_photo_sub: "Breakaway safety clasps crafted for peaceful urban stray coexistence.",
+        founders_badge: "The Team Behind the Mission",
+        founders_title: "Meet the Founders",
+        founders_subtitle: "Born out of love for Istanbul's four-legged citizens.",
+        f1_role: "Co-founder & Product Lead",
+        f1_tag: "Kadıköy",
+        f1_bio: "Feline enthusiast and tech builder from Kadıköy, dedicated to giving every street cat an identity.",
+        f2_role: "Co-founder & Chief Veterinary Officer",
+        f2_tag: "DVM",
+        f2_bio: "Neighborhood clinic vet ensuring every collar is 100% feline-safe, stress-free, and lightweight.",
+        f3_role: "Head of Hardware & Industrial Design",
+        f3_tag: "Design",
+        f3_bio: "Product designer specializing in breakaway safety clasps and weatherproof QR technology.",
+        signup_title: "Get updates from Kedibul",
+        signup_promise: "\"We'll only send you what matters for Istanbul's cats.\"",
+        signup_btn: "Subscribe to Updates",
+        signup_success: "Thank you! You are on the guardian list.",
+        footer_mission: "Crowdsourced cat welfare network honoring Istanbul's centuries-old street feline heritage through modern contactless identification.",
+        footer_links_title: "Explore",
+        footer_contact_title: "Contact",
+        footer_legal_title: "Legal & KVKK",
+        legal_notice: "[LEGAL_NOTICE_TEXT: Kedibul is a civic animal welfare initiative in compliance with Turkish Animal Protection Law No. 5199.]"
+      },
+      tr: {
+        nav_open_app: "Uygulamayı Aç",
+        nav_products: "Ürünler",
+        nav_how: "Nasıl Çalışır",
+        nav_colors: "Renkler",
+        nav_cats: "Hikayeler",
+        nav_mission: "Misyon",
+        nav_vets: "Veterinerler",
+        nav_founders: "Kurucular",
+        hero_badge: "İstanbul Sokak Kedisi Güvenliği",
+        hero_title: "Her kedinin bir hikayesi var. Okutun, okuyun.",
+        hero_subtitle: "Kedibul tasmaları, bir sokak kedisiyle karşılaşanların onun kim olduğunu, nereye ait olduğunu ve nasıl yardım edileceğini bilmesini sağlar.",
+        hero_cta_get: "Tasmanı Al",
+        hero_cta_app: "Uygulamayı Aç",
+        hero_collar_pill: "Kamerayla QR tara • Anında kimlik",
+        how_eyebrow: "İmece & Kolay",
+        how_title: "Kedibul Nasıl Çalışır?",
+        how_tagline: "\"İstanbul tarafından, İstanbul için tasarlandı.\"",
+        step1_title: "Telefon kamerasıyla okutun",
+        step1_desc: "Herhangi bir telefon kamerasını QR etikete tutun. Uygulama indirmeden temel bilgilere hemen erişin.",
+        step2_title: "Kedinin profilini okuyun",
+        step2_desc: "Mahalle esnafının verdiği adı, karakterini, beslenme alışkanlıklarını ve eğlenceli anılarını keşfedin.",
+        step3_title: "Mahalleye destek olun",
+        step3_desc: "Sağlık durumunu bildirin, güvenli konum paylaşın ve bölgedeki gönüllü bakıcılar ve veterinerlerle dayanışın.",
+        color_tag: "Sokak İletişim Rehberi",
+        color_title: "Renk Anlamları",
+        color_desc: "Tasma renkleri, kedinin yaklaşım tercihini hem mahalle sakinlerine hem turistlere anında anlatır.",
+        color_green_title: "Yeşil Tasma",
+        color_green_badge: "Uysal & Sevgi Dolu",
+        color_green_meaning: "\"Uysal. Gelip sevebilirsiniz.\" Çene altı okşanmaya, kucakta uyumaya ve ikramlara bayılır.",
+        color_green_hint: "Genelde vapur iskelelerinde, kafelerde ve kitapçılarda takılan sosyal kedilerde bulunur.",
+        color_yellow_title: "Sarı Tasma",
+        color_yellow_badge: "Dikkatli Yaklaş",
+        color_yellow_meaning: "\"Temkinli. Sakin yaklaşın.\" İlginizi sever ama önce elinizi koklamasına izin verin.",
+        color_yellow_hint: "Karaköy ve Moda ara sokaklarındaki gözlemci, temkinli dostlarımız için idealdir.",
+        color_red_title: "Kırmızı Tasma",
+        color_red_badge: "Dokunmayın",
+        color_red_meaning: "\"Yaklaşmayınız.\" Bağımsız sokak reisi veya medikal tedavide. Lütfen sadece uzaktan hayran kalın!",
+        color_red_hint: "Hassas ve huysuz kedileri istemedikleri temastan korurken QR sayesinde takibini sağlar.",
+        preview_badge: "QR Okutma Simülasyonu",
+        preview_title: "Ekranda Ne Görürsünüz?",
+        preview_desc: "İstanbul'un ünlü sokak sakinlerinden gerçek imece biyografi kartları.",
+        mockup_report_btn: "Gördüm Diye Bildir",
+        products_badge: "Resmi Donanım",
+        products_title: "Kedibul Tasmaları",
+        products_subtitle: "Güvenli kilit mekanizmalı, dayanıklı naylon dokuma, lazer baskı QR veya AirTag uyumlu yuvalar.",
+        prod1_badge: "Uysal",
+        prod1_name: "Kedibul Yeşil Tasma (QR)",
+        prod1_desc: "\"Uysal. Gelip sevebilirsiniz.\"",
+        prod2_badge: "Temkinli",
+        prod2_name: "Kedibul Sarı Tasma (QR)",
+        prod2_desc: "\"Temkinli. Sakin yaklaşın.\"",
+        prod3_badge: "Dokunmayın",
+        prod3_name: "Kedibul Kırmızı Tasma (QR)",
+        prod3_desc: "\"Yaklaşmayınız.\"",
+        prod4_badge: "Takip & Tara",
+        prod4_name: "Kedibul AirTag Uyumlu Tasma",
+        prod4_desc: "\"Kedinizin yerini canlı da mı görmek istiyorsunuz? AirTag yuvasıyla eşleştirin.\"",
+        prod_spec: "Yüksek mukavemetli naylon, paslanmaz çelik toka, emniyetli kopma kilidi, suya dayanıklı QR etiket.",
+        prod4_spec: "Apple AirTag için özel silikon yuva + yedek QR etiket. Çifte kayıp koruması.",
+        buy_now: "Satın Al →",
+        mission_eyebrow: "İstanbul Sevdamız",
+        mission_title: "Neden Kedibul?",
+        mission_quote: "\"İstanbul'un kedileri onun sokaklarına aittir. Kedibul onların evini bulmasına ve her komşunun kiminle tanıştığını bilmesine yardımcı olur.\"",
+        stat_cats_label: "Tahmini Sokak Kedisi",
+        stat_scanned_label: "14.250+ Okutulan Etiket",
+        stat_registered_label: "3.890 Aktif Vasisi Olan Kayıtlı Kedi",
+        stat_source: "[KAYNAK: Şehir Envanteri]",
+        vet_badge: "Sağlık Ağı",
+        vet_title: "İstanbul genelinde 100+ veterinerin tercihi",
+        vet_subtitle: "Kaza ve rahatsızlıklarda hızlı aşı ve tedavi geçmişine ulaşmak için mahalle klinikleriyle entegre.",
+        vet_clinic: "Moda Pati Kliniği, Kadıköy [VET_PHOTO]",
+        vet_quote: "\"[ALINTI] Kedibul tasmalı yaralı bir kedi kliniğimize getirildiğinde, aşı geçmişini ve mahalleyi besleyen gönüllüye anında ulaşabiliyoruz. Bu bize dakikalar kazandırıyor.\"",
+        clinic_wall_title: "Anlaşmalı Veteriner Klinikleri",
+        cat_photo_loc: "Karaköy Rıhtımı • Aktif Tasma",
+        cat_photo_tag: "Sokak Koruyucusu",
+        cat_photo_caption: "\"Tak, okut, evine dönsün.\"",
+        cat_photo_sub: "Şehir sokaklarında güvenli ve huzurlu bir yaşam için emniyet kilitli tasma.",
+        founders_badge: "Misyonun Ardındaki Ekip",
+        founders_title: "Kurucularımız",
+        founders_subtitle: "İstanbul'un dört ayaklı sakinlerine duyulan sevgiden doğdu.",
+        f1_role: "Kurucu Ortak & Ürün Lideri",
+        f1_tag: "Kadıköy",
+        f1_bio: "Kadıköy'den sokak kedilerine dijital kimlik kazandırmayı hedefleyen yazılımcı ve kedi aşığı.",
+        f2_role: "Kurucu Ortak & Baş Veteriner Hekim",
+        f2_tag: "DVM",
+        f2_bio: "Her tasmayı %100 güvenli, hafif ve kedilere uygun tasarlayan mahalle veteriner hekimi.",
+        f3_role: "Donanım & Endüstriyel Tasarım Lideri",
+        f3_tag: "Tasarım",
+        f3_bio: "Ayrılabilir güvenlik tokaları ve hava şartlarına dayanıklı QR teknolojileri uzmanı endüstriyel tasarımcı.",
+        signup_title: "Kedibul bültenine katılın",
+        signup_promise: "\"Sadece İstanbul'un kedilerini ilgilendiren önemli gelişmeleri paylaşırız.\"",
+        signup_btn: "Gelişmelerden Haberdar Ol",
+        signup_success: "Teşekkürler! Mahalle koruyucuları listesine eklendiniz.",
+        footer_mission: "İstanbul'un yüzyıllık sokak kedisi kültürünü modern temassız kimlik teknolojisiyle yaşatan imece platformu.",
+        footer_links_title: "Bağlantılar",
+        footer_contact_title: "İletişim",
+        footer_legal_title: "Yasal & KVKK",
+        legal_notice: "[YASAL METİN: Kedibul, 5199 Sayılı Hayvanları Koruma Kanunu ilkelerine bağlı bir sivil hayvan refahı girişimidir.]"
+      }
+    };
+
+    // CAT PROFILES DATA FOR SIMULATION
+    const catProfiles = [
+      {
+        name_en: "Toby, Guardian of the Metro",
+        name_tr: "Toby, Metro Muhafızı",
+        badge_en: "Green Collar • Friendly",
+        badge_tr: "Yeşil Tasma • Uysal",
+        badge_color: "bg-emerald-100 text-kedi-green border-emerald-200",
+        location: "Taksim Metro Station, Exit 2",
+        story_en: "\"Has ridden the Taksim line more times than most commuters. Never pays. Always gets a seat. Enjoys chin scratches while the train arrives.\"",
+        story_tr: "\"Taksim metrosuna çoğu yolcudan daha çok bindi. Bilet basmaz. Koltuğu daima kapar. Tren gelirken çene altı sevilmesine bayılır.\"",
+        feeder: "Simitçi Ahmet Abi & Metro Staff",
+        image: "/assets/green-collar.png"
+      },
+      {
+        name_en: "Mirzam, Keeper of Kadıköy Fish Market",
+        name_tr: "Mirzam, Kadıköy Balık Pazarı Reisi",
+        badge_en: "Yellow Collar • Medium",
+        badge_tr: "Sarı Tasma • Temkinli",
+        badge_color: "bg-amber-100 text-kedi-yellowDark border-amber-200",
+        location: "Kadıköy Balık Pazarı",
+        story_en: "\"Negotiates for fish scraps with the seriousness of a seasoned diplomat. Approach gently with fresh anchovies, do not make sudden moves.\"",
+        story_tr: "\"Hamsi artıklarını tecrübeli bir diplomat ciddiyetiyle müzakere eder. Yavaşça yaklaşın, ani hareket yapmadan koklamasına izin verin.\"",
+        feeder: "Balıkçı Salih Usta",
+        image: "/assets/yellow-collar.png"
+      },
+      {
+        name_en: "Pamuk, Enemy of the Pigeons",
+        name_tr: "Pamuk, Güvercinlerin Korkulu Rüyası",
+        badge_en: "Red Collar • Do Not Approach",
+        badge_tr: "Kırmızı Tasma • Yaklaşmayınız",
+        badge_color: "bg-red-100 text-kedi-red border-red-200",
+        location: "Galata Tower Courtyard",
+        story_en: "\"Please admire from a respectful distance. He is currently on strict pigeon-reconnaissance duty and does not tolerate petting interruptions.\"",
+        story_tr: "\"Lütfen saygılı bir mesafeden izleyiniz. Kendisi şu an nöbette olup güvercin devriyesi sırasında sevilmekten hiç hoşlanmaz.\"",
+        feeder: "Galata Çay Evi",
+        image: "/assets/red-collar.png"
+      }
+    ];
+
+    let currentLang = 'en';
+    let currentProfileIndex = 0;
+
+    function renderProfile() {
+      const p = catProfiles[currentProfileIndex];
+      const name = currentLang === 'en' ? p.name_en : p.name_tr;
+      const badge = currentLang === 'en' ? p.badge_en : p.badge_tr;
+      const story = currentLang === 'en' ? p.story_en : p.story_tr;
+      
+      const container = document.getElementById('cat-profile-display');
+      container.style.opacity = '0';
+      
+      setTimeout(() => {
+        container.innerHTML = `
+          <div class="flex items-center gap-3 mb-3">
+            <div class="w-14 h-14 rounded-2xl bg-white p-1 border border-cream-300 flex items-center justify-center shadow-sm">
+              <img src="${p.image}" alt="${name}" class="w-full h-full object-contain">
+            </div>
+            <div>
+              <span class="inline-block text-[9px] font-extrabold uppercase px-2 py-0.5 rounded border ${p.badge_color} mb-1">
+                ${badge}
+              </span>
+              <h4 class="font-serif font-bold text-sm text-charcoal-900 leading-snug">${name}</h4>
+              <p class="text-[10px] text-charcoal-500 font-medium">📍 ${p.location}</p>
+            </div>
+          </div>
+
+          <div class="bg-white/90 p-3 rounded-xl border border-cream-200 text-xs text-charcoal-700 leading-relaxed font-sans shadow-inner mb-2">
+            ${story}
+          </div>
+
+          <div class="flex items-center justify-between text-[10px] text-charcoal-500 px-1">
+            <span>🛡️ Guardian: <strong>${p.feeder}</strong></span>
+            <span class="text-kedi-green font-bold inline-flex items-center gap-1.5"><span class="w-1.5 h-1.5 rounded-full bg-kedi-green" aria-hidden="true"></span>Vaccinated</span>
+          </div>
+        `;
+        container.style.opacity = '1';
+
+        // Update dots
+        const dots = document.querySelectorAll('#profile-dots span');
+        dots.forEach((dot, idx) => {
+          if (idx === currentProfileIndex) {
+            dot.className = 'w-4 h-2 rounded-full bg-kedi-red transition-all';
+          } else {
+            dot.className = 'w-2 h-2 rounded-full bg-charcoal-700 transition-all';
+          }
+        });
+      }, 150);
+    }
+
+    function nextCatProfile() {
+      currentProfileIndex = (currentProfileIndex + 1) % catProfiles.length;
+      renderProfile();
+    }
+
+    function prevCatProfile() {
+      currentProfileIndex = (currentProfileIndex - 1 + catProfiles.length) % catProfiles.length;
+      renderProfile();
+    }
+
+    // LANGUAGE SWITCHER
+    function toggleLanguage() {
+      currentLang = currentLang === 'en' ? 'tr' : 'en';
+      document.documentElement.lang = currentLang;
+      document.getElementById('lang-indicator').innerText = currentLang.toUpperCase();
+      document.querySelectorAll('#langToggleBtn .language-option').forEach(option => {
+        option.innerText = option.dataset.language.toUpperCase();
+        option.classList.toggle('is-active', option.dataset.language === currentLang);
+        option.classList.toggle('text-kedi-red', option.dataset.language === currentLang);
+        option.classList.toggle('text-charcoal-600', option.dataset.language !== currentLang);
+      });
+      
+      // Update all data-i18n tags
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (translations[currentLang] && translations[currentLang][key]) {
+          el.innerText = translations[currentLang][key];
+        }
+      });
+
+      renderProfile();
+    }
+
+    // COLOR CARD SELECTION
+    function selectColor(color) {
+      const cards = ['green', 'yellow', 'red'];
+      cards.forEach(c => {
+        const el = document.getElementById(`card-${c}`);
+        if (c === color) {
+          el.classList.add('border-charcoal-900', 'bg-white', 'scale-[1.02]');
+          el.classList.remove('bg-white/80');
+        } else {
+          el.classList.remove('border-charcoal-900', 'scale-[1.02]');
+          el.classList.add('bg-white/80');
+        }
+      });
+    }
+
+    // PRODUCT CAROUSEL LOGIC
+    function scrollProductCarousel(direction) {
+      const carousel = document.getElementById('productCarousel');
+      const cardWidth = carousel.firstElementChild.offsetWidth + 16;
+      carousel.scrollBy({ left: direction * cardWidth, behavior: 'smooth' });
+    }
+
+    function updateProductCounter() {
+      const carousel = document.getElementById('productCarousel');
+      const cardWidth = carousel.firstElementChild.offsetWidth;
+      const index = Math.round(carousel.scrollLeft / cardWidth) + 1;
+      document.getElementById('product-counter').innerText = Math.min(Math.max(index, 1), 4);
+    }
+
+    function handleSubscribe(e) {
+      e.preventDefault();
+      document.getElementById('sub-success').classList.remove('hidden');
+    }
+
+    // INIT
+    window.addEventListener('DOMContentLoaded', () => {
+      renderProfile();
+    });
+  </script>
+</body></html>

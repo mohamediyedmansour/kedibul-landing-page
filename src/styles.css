@@ -1,0 +1,255 @@
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: #f4efe5;
+  color: #17252b;
+}
+
+.bg-iznik {
+  background-color: #f4efe5;
+}
+
+#root > main {
+  background: #f4efe5;
+}
+
+#root > main > section:nth-of-type(even) {
+  background-color: rgba(255, 253, 248, 0.84);
+}
+
+#root > main > header,
+#root > main > nav {
+  background-color: rgba(255, 253, 248, 0.94);
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50% { transform: translateY(-8px) rotate(1deg); }
+}
+
+.floating-collar {
+  animation: float 5s ease-in-out infinite;
+}
+
+.hero-collar-image {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 300ms ease, transform 500ms ease;
+}
+
+.hero-collar-image.is-changing {
+  opacity: 0;
+  transform: scale(0.97);
+}
+
+#root > main {
+  min-height: 100vh;
+}
+
+/* The original export was locked to a phone-width column. Keep that
+   behavior on small screens, but let desktop layouts use the available canvas. */
+@media (min-width: 768px) {
+  #root > main {
+    width: min(1180px, 100%);
+    margin: 0 auto;
+  }
+
+  #root > main > header > div,
+  #root > main > nav,
+  #root > main > section,
+  #root > main > footer > div {
+    width: min(1180px, calc(100% - 64px));
+    max-width: none !important;
+  }
+
+  #root > main > header > div {
+    height: 72px;
+  }
+
+  #root > main > nav {
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+
+  #root > main > section {
+    padding-top: 3.5rem;
+    padding-bottom: 3.5rem;
+  }
+
+  #root > main > section:first-of-type {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(360px, 0.8fr);
+    align-items: center;
+    column-gap: 4rem;
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  #root > main > section:first-of-type > :nth-child(2),
+  #root > main > section:first-of-type > :nth-child(3),
+  #root > main > section:first-of-type > :nth-child(4),
+  #root > main > section:first-of-type > :nth-child(5) {
+    grid-column: 1;
+  }
+
+  #root > main > section:first-of-type > :nth-child(6) {
+    grid-column: 2;
+    grid-row: 1 / span 4;
+  }
+
+  #how-it-works > div:last-child {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1.25rem;
+  }
+
+  #meanings > .space-y-3 {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  #meanings > .space-y-3 > * {
+    margin-top: 0;
+  }
+
+  #products #productCarousel {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  #products #productCarousel > * {
+    width: auto;
+  }
+
+  #products #productCarousel + .flex {
+    display: none;
+  }
+
+  #preview {
+    max-width: 860px !important;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #veterinarians,
+  #founders {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem 3rem;
+    align-items: start;
+  }
+
+  #veterinarians > .text-center,
+  #founders > .text-center {
+    grid-column: 1 / -1;
+  }
+
+  #founders > .space-y-4 {
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+  }
+
+  #founders > .space-y-4 > * {
+    margin-top: 0;
+  }
+
+  .cinematic-section {
+    display: inline-block;
+    width: calc(38% - 1rem) !important;
+    margin-right: 1rem;
+    vertical-align: top;
+    padding-top: 3.5rem !important;
+  }
+
+  #root > main > section#founders {
+    display: inline-grid;
+    width: calc(58% - 1rem) !important;
+    margin-left: 1rem;
+    vertical-align: top;
+    padding-top: 3.5rem !important;
+  }
+
+  .cinematic-section > div {
+    aspect-ratio: 4 / 3;
+  }
+
+  #root > main > footer > div {
+    display: grid;
+    grid-template-columns: 1.4fr 1fr 1.2fr;
+    gap: 2.5rem;
+  }
+
+  #root > main > footer > div > :last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+#founders > .space-y-4 > div {
+  min-height: 235px;
+}
+
+#founders h3 {
+  white-space: nowrap;
+}
+
+#founders .flex-1 {
+  min-width: 0;
+}
+
+#how-it-works > div:last-child > div {
+  min-height: 150px;
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  #how-it-works > div:last-child > div {
+    height: 150px;
+  }
+}
+
+@media (max-width: 767px) {
+  #root > main > header > div,
+  #root > main > nav,
+  #root > main > section,
+  #root > main > footer > div {
+    max-width: 100%;
+  }
+}
+
+#langToggleBtn {
+  min-width: 82px;
+  justify-content: center;
+  gap: 0.2rem;
+}
+
+#langToggleBtn .language-option {
+  transition: color 160ms ease, background-color 160ms ease;
+}
+
+#langToggleBtn .language-option.is-active {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+@media (min-width: 768px) {
+  #langToggleBtn {
+    min-width: 102px;
+    padding: 0.55rem 0.8rem;
+  }
+}
