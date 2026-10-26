@@ -41,3 +41,4 @@ behavior are implemented in `src/main.jsx` and `src/styles.css`.
 Current launch content includes `₺180` QR collars, a `₺480` AirTag collar,
 `2,000+` registered cats, `20+` community updates, and `10+` partner clinics.
 The app and checkout CTAs remain intentionally inactive until their URLs exist.
+# kedibul-landing-page
