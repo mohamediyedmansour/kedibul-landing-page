@@ -38,6 +38,6 @@ The `EN / TR` header control swaps all visible landing-page copy. The scan demo,
 collar selector, Istanbul map pins, scroll-linked hero motion, and reduced-motion
 behavior are implemented in `src/main.jsx` and `src/styles.css`.
 
-Pricing, network totals, approved biographies, and production profile photography
-still need to be supplied. Missing figures intentionally display `TBA`, never a
-bracketed placeholder.
+Current launch content includes `₺180` QR collars, a `₺480` AirTag collar,
+`2,000+` registered cats, `20+` community updates, and `10+` partner clinics.
+The app and checkout CTAs remain intentionally inactive until their URLs exist.

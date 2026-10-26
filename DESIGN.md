@@ -149,7 +149,8 @@ The English copy below is the source of truth for the first implementation. The 
 - Yellow card: `Yellow / Caution / “Give me a little space.”`
 - Red card: `Red / Do not approach / “Watch from a distance.”`
 - Gold card: `AirTag / Track + scan / “Two ways to find the way home.”`
-- Price line on each card: `Price: TBA`
+- Price line on green, yellow, and red QR cards: `₺180`
+- Price line on the AirTag collar: `₺480`
 - CTA: `Choose this collar`
 
 ### 5. Istanbul map and stats — “A city of small guardians”
@@ -160,10 +161,10 @@ The English copy below is the source of truth for the first implementation. The 
 - Map caption: `Illustrative district map — live coverage launches with the Kedibul community.`
 - Stats:
   - `39` / `Istanbul districts`
-  - `TBA` / `Registered cats`
-  - `TBA` / `Community updates`
-  - `TBA` / `Partner clinics`
-- Source note: `Verified figures will be published here as the network opens.`
+  - `2,000+` / `Registered cats`
+  - `20+` / `Community updates`
+  - `10+` / `Partner clinics`
+- Source note: `Community figures are updated as the network grows.`
 
 ### 6. Cat stories — “Read the street”
 
@@ -180,9 +181,8 @@ The English copy below is the source of truth for the first implementation. The 
 - Label: `WHY WE BUILT IT`
 - Headline: `The best cat database is a city full of witnesses.`
 - Body: `Kedibul began with a simple question: what if the small things Istanbul already knows about its cats could be useful to everyone who stops to help?`
-- Founder card 1: `Iyed / Co-founder / Product, field research, and the first neighborhood profiles.`
-- Founder card 2: `Wassam / Co-founder / Design, technology, and making the useful parts feel human.`
-- Note: `Founder bios are short launch copy and should be replaced with approved biographies before publication.`
+- Founder card 1: `Iyed / Co-founder / Previously worked at a language-learning startup, bringing product thinking and field research to Kedibul.`
+- Founder card 2: `Wassam / Co-founder / Hands-on marketing and logistics experience, turning a good idea into something a neighborhood can use.`
 
 ### 8. Footer
 
@@ -192,6 +192,7 @@ The English copy below is the source of truth for the first implementation. The 
 - Links: `Instagram`, `Contact`, `Privacy`, `Terms`
 - Locale: `Istanbul, Türkiye`
 - Legal line: `Kedibul is a community information service, not a substitute for veterinary care or emergency help.`
+- Footer legal links open readable Privacy and Terms panels until dedicated root pages are added.
 
 ## The four interactive “wow” moments
 
@@ -208,4 +209,3 @@ The English copy below is the source of truth for the first implementation. The 
 - The EN/TR toggle updates all visible navigation, headings, labels, buttons, card copy, stats labels, and footer copy.
 - All images have meaningful alt text. Interactive cards are keyboard reachable and expose selected state.
 - Reduced-motion mode keeps all content visible and removes scroll-linked and looping animation.
-
