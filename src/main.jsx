@@ -29,6 +29,16 @@ const copy = {
     scanButton: 'Open Misket’s profile',
     steps: ['Scan any collar', 'Read their profile', 'Leave a useful note'],
     stepLabels: ['Scanning QR code', 'Cat profile found', 'Update shared with neighbors'],
+    profileKicker: 'CAT PROFILE / 0042',
+    profileLive: 'LIVE',
+    profileLocation: 'Karaköy, Mumhane Street',
+    temperament: 'Friendly, observant',
+    lastSeen: 'By the blue door, 2 hours ago',
+    update: 'Wet food after the ferry rush. Fresh water nearby.',
+    checked: 'Last checked by a neighbor · 2 hours ago',
+    labels: ['Temperament', 'Last seen', 'Update'],
+    stageFooter: 'Scan. Know. Care.',
+    statLabels: ['Istanbul districts', 'Registered cats', 'Community updates', 'Partner clinics'],
     privacyTitle: 'Privacy',
     termsTitle: 'Terms',
     legalClose: 'Close',
@@ -67,6 +77,16 @@ const copy = {
     scanButton: 'Misket’in profilini aç',
     steps: ['Tasmayı okut', 'Profilini oku', 'Faydalı bir not bırak'],
     stepLabels: ['QR kodu taranıyor', 'Kedi profili bulundu', 'Güncelleme komşularla paylaşıldı'],
+    profileKicker: 'KEDİ PROFİLİ / 0042',
+    profileLive: 'CANLI',
+    profileLocation: 'Karaköy, Mumhane Sokağı',
+    temperament: 'Dost canlısı, gözlemci',
+    lastSeen: 'Mavi kapının yanında, 2 saat önce',
+    update: 'Vapur yoğunluğundan sonra yaş mama. Yakında taze su var.',
+    checked: 'Bir komşu tarafından kontrol edildi · 2 saat önce',
+    labels: ['Karakter', 'Son görülme', 'Güncelleme'],
+    stageFooter: 'Tara. Tanı. Koru.',
+    statLabels: ['İstanbul ilçesi', 'Kayıtlı kedi', 'Topluluk güncellemesi', 'Partner klinik'],
     privacyTitle: 'Gizlilik',
     termsTitle: 'Koşullar',
     legalClose: 'Kapat',
@@ -174,7 +194,7 @@ function Hero({ t }) {
       <div className="hero-stage" style={{ '--hero-tilt': `${tilt}deg` }}>
         <div className="hero-stage-meta"><span>41° 01′ N</span><span>29° 00′ E</span></div>
         <div className="hero-collar-wrap"><img src={redCollar} alt="Red Kedibul collar with QR tag" /><span className="hero-tag">QR</span></div>
-        <div className="hero-stage-bottom"><span>IST / 2026</span><span>Scan. Know. Care.</span></div>
+        <div className="hero-stage-bottom"><span>IST / 2026</span><span>{t.stageFooter}</span></div>
       </div>
     </section>
   );
@@ -185,9 +205,17 @@ function PhoneDemo({ t }) {
   const [activeStep, setActiveStep] = useState(0);
   useEffect(() => {
     if (!visible) return undefined;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setCounts(targets);
+      return undefined;
+    }
     const timer = window.setInterval(() => setActiveStep((step) => (step < 2 ? step + 1 : step)), 2400);
     return () => window.clearInterval(timer);
   }, [visible]);
+  const restart = () => {
+    setActiveStep(-1);
+    window.setTimeout(() => setActiveStep(0), 80);
+  };
   return (
     <section className="scan section-dark" id="scan" ref={ref}>
       <div className="scan-intro"><p className="eyebrow eyebrow-yellow">{t.scanLabel}</p><h2>{t.scanTitle}</h2><p>{t.scanBody}</p></div>
@@ -195,15 +223,15 @@ function PhoneDemo({ t }) {
         <div className="phone-notch" />
         <div className="phone-screen">
           <div className="phone-top"><span>09:41</span><span>●●●</span></div>
-          <div className="scan-heading"><span>KEDIBUL / PROFILE</span><b>● LIVE</b></div>
+          <div className="scan-heading"><span>{t.profileKicker}</span><b>● {t.profileLive}</b></div>
           <div className={`qr-box step-${activeStep}`} aria-label="Decorative QR code">
             {Array.from({ length: 49 }, (_, i) => <i key={i} className={(i % 7 === 0 || i % 11 === 0 || [0, 1, 2, 7, 14, 42, 43, 44, 35, 28].includes(i)) ? 'dark' : ''} />)}
             <span className="scan-line" />
           </div>
-          <div className={`profile-card step-card-${activeStep}`}><div className="profile-avatar"><img src={misketPhoto} alt="Misket the cat" /></div><div><span className="profile-kicker">CAT PROFILE / 0042</span><h3>Misket</h3><p>📍 Karaköy, Mumhane Street</p></div><div className="profile-details"><span><b>Temperament</b>Friendly, observant</span><span><b>Last seen</b>By the blue door, 2 hours ago</span><span><b>Update</b>Wet food after the ferry rush. Fresh water nearby.</span></div><small>Last checked by a neighbor · 2 hours ago</small></div>
+          <div className={`profile-card step-card-${activeStep}`}><div className="profile-avatar"><img src={misketPhoto} alt="Misket the cat" /></div><div><span className="profile-kicker">{t.profileKicker}</span><h3>Misket</h3><p>📍 {t.profileLocation}</p></div><div className="profile-details"><span><b>{t.labels[0]}</b>{t.temperament}</span><span><b>{t.labels[1]}</b>{t.lastSeen}</span><span><b>{t.labels[2]}</b>{t.update}</span></div><small>{t.checked}</small></div>
         </div>
       </div>
-      <div className="scan-steps">{t.steps.map((step, index) => <div className={`scan-step ${activeStep === index ? 'is-active' : ''}`} key={step}><span>0{index + 1}</span><p>{step}</p></div>)}</div>
+      <div className="scan-steps">{t.steps.map((step, index) => <button type="button" className={`scan-step ${activeStep === index ? 'is-active' : ''}`} onClick={index === 0 ? restart : undefined} key={step}><span>0{index + 1}</span><p>{step}</p></button>)}</div>
       <p className="scan-current"><span>0{activeStep + 1}</span>{t.stepLabels[activeStep]}</p>
     </section>
   );
@@ -227,9 +255,22 @@ function CollarSelector({ lang, t }) {
 
 function MapSection({ t }) {
   const [ref, visible] = useReveal();
-  const stats = [['39', 'Istanbul districts'], ['2,000+', 'Registered cats'], ['20+', 'Community updates'], ['10+', 'Partner clinics']];
+  const [counts, setCounts] = useState([0, 0, 0, 0]);
+  const targets = [39, 2000, 20, 10];
+  useEffect(() => {
+    if (!visible) return undefined;
+    const start = performance.now();
+    const tick = (now) => {
+      const progress = Math.min(1, (now - start) / 1200);
+      const eased = 1 - ((1 - progress) ** 3);
+      setCounts(targets.map((target) => Math.round(target * eased)));
+      if (progress < 1) window.requestAnimationFrame(tick);
+    };
+    window.requestAnimationFrame(tick);
+    return undefined;
+  }, [visible]);
   return (
-    <section className="map-section section-dark" id="map" ref={ref}><div className="map-copy"><p className="eyebrow eyebrow-sage">{t.mapLabel}</p><h2>{t.mapTitle}</h2><p>{t.mapBody}</p><p className="map-caption">{t.mapCaption}</p></div><div className="map-visual"><svg viewBox="0 0 620 410" role="img" aria-label="Stylized map of Istanbul districts"><path className="map-land" d="M66 84c65-34 119-39 177-12 26 12 50 9 75-8 39-26 83-21 123 10l93 72-36 49-64-17-48 54-81-13-41 55-75-16-26-52-77-19-29-61z" /><path className="map-water" d="M300 24c-25 55-38 93-23 134 14 38 11 67-18 105l-26 44 31 16c39-48 61-90 55-129-6-40 20-84 62-141z" /><path className="map-line" d="M91 141l162 27 68-45 116 38 105-9M158 247l103-79 58 85 109-66M251 168l-17 108" />{[[140,130,'Kadıköy'], [342,103,'Beyoğlu'], [470,155,'Beşiktaş'], [245,270,'Üsküdar'], [400,260,'Fatih']].map(([x, y, name]) => <g className="map-pin" key={name} transform={`translate(${x} ${y})`}><circle className="pin-pulse" r="13" /><circle className="pin-dot" r="5" /><text x="12" y="4">{name}</text></g>)}</svg></div><div className="stats">{stats.map(([value, label]) => <div className="stat" key={label}><strong className={visible ? 'count-in' : ''}>{value}</strong><span>{label}</span></div>)}</div><p className="source-note">{t.source}</p></section>
+    <section className="map-section section-dark" id="map" ref={ref}><div className="map-copy"><p className="eyebrow eyebrow-sage">{t.mapLabel}</p><h2>{t.mapTitle}</h2><p>{t.mapBody}</p><p className="map-caption">{t.mapCaption}</p></div><div className="map-visual"><svg viewBox="0 0 620 410" role="img" aria-label="Stylized map of Istanbul districts"><path className="map-land" d="M66 84c65-34 119-39 177-12 26 12 50 9 75-8 39-26 83-21 123 10l93 72-36 49-64-17-48 54-81-13-41 55-75-16-26-52-77-19-29-61z" /><path className="map-water" d="M300 24c-25 55-38 93-23 134 14 38 11 67-18 105l-26 44 31 16c39-48 61-90 55-129-6-40 20-84 62-141z" /><path className="map-line" d="M91 141l162 27 68-45 116 38 105-9M158 247l103-79 58 85 109-66M251 168l-17 108" />{[[140,130,'Kadıköy'], [342,103,'Beyoğlu'], [470,155,'Beşiktaş'], [245,270,'Üsküdar'], [400,260,'Fatih']].map(([x, y, name]) => <g className="map-pin" key={name} transform={`translate(${x} ${y})`}><circle className="pin-pulse" r="13" /><circle className="pin-dot" r="5" /><text x="12" y="4">{name}</text></g>)}</svg></div><div className="stats">{counts.map((value, index) => <div className="stat" key={t.statLabels[index]}><strong>{index === 0 ? value : `${value}+`}</strong><span>{t.statLabels[index]}</span></div>)}</div><p className="source-note">{t.source}</p></section>
   );
 }
 
@@ -244,7 +285,7 @@ function Founders({ t }) {
 }
 
 function Footer({ t, setLegal }) {
-  return <footer className="footer section-dark" id="footer"><div><p className="eyebrow eyebrow-yellow">KEDIBUL / ISTANBUL</p><h2>{t.footerTitle}</h2><p>{t.footerBody}</p><span className="button button-yellow button-disabled" aria-disabled="true">{t.openApp}<span>↗</span></span></div><div className="footer-links"><a href="https://instagram.com/kedibul.app">Instagram ↗</a><a href="mailto:hello@kedibul.app">Contact ↗</a><button onClick={() => setLegal('privacy')}>{t.privacyTitle}</button><button onClick={() => setLegal('terms')}>{t.termsTitle}</button></div><div className="footer-bottom"><span>© 2026 Kedibul</span><span>{t.legal}</span><span>Istanbul, Türkiye</span></div></footer>;
+  return <footer className="footer section-dark" id="footer"><div><p className="eyebrow eyebrow-yellow">KEDIBUL / ISTANBUL</p><h2>{t.footerTitle}</h2><p>{t.footerBody}</p></div><div className="footer-links"><a href="https://instagram.com/kedibul.app">Instagram ↗</a><a href="mailto:hello@kedibul.app">Contact ↗</a><button onClick={() => setLegal('privacy')}>{t.privacyTitle}</button><button onClick={() => setLegal('terms')}>{t.termsTitle}</button></div><div className="footer-bottom"><span>© 2026 Kedibul</span><span>{t.legal}</span><span>Istanbul, Türkiye</span></div></footer>;
 }
 
 function LegalPage({ type, t, setLegal }) {

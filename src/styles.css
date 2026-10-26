@@ -12,6 +12,7 @@
 .button-disabled:hover{transform:none}
 .scan-step{opacity:.42;transition:opacity .3s ease,color .3s ease}
 .scan-step.is-active{opacity:1;color:var(--yellow)}
+.scan-step{border:0;background:transparent;text-align:left;padding-left:0;cursor:pointer;color:inherit;font:inherit}
 .scan-current{grid-column:1/-1;display:flex;align-items:center;gap:.8rem;margin:1rem 0 0;color:var(--yellow);font:500 .72rem 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em}
 .scan-current span{border:1px solid var(--yellow);border-radius:50%;width:1.75rem;height:1.75rem;display:grid;place-items:center}
 .legal-overlay{position:fixed;inset:0;z-index:60;background:rgba(11,20,23,.78);display:grid;place-items:center;padding:1.25rem}
